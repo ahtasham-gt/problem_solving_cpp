@@ -107,22 +107,46 @@ void ms(vector<int> &arr, int l, int h){
     merge(arr,l,m,h);
 }
 
-int main(){
-    int arr[]={12,4,8,6,1};
-    int n=sizeof(arr)/sizeof(arr[0]);
-    // r_bubble(arr,n);
-    r_insertion(arr,n,0);
-    for(int i: arr){
-        cout<<i<<" ";
+//quick sort tc-> o(nlogn)
+int partition(vector<int> &arr, int low, int high) {
+    int pivot = arr[low];
+    int i = low;
+    int j = high;
+
+    while (i < j) {
+        while (i <= high - 1 && arr[i] <= pivot) i++;
+        while (j >= low + 1 && arr[j] > pivot) j--;
+        if (i < j) swap(arr[i], arr[j]);
     }
 
-    //merge and quick sort
-    // vector<int> v={12,4,8,6,1};
-    // ms(v,0,v.size()-1);
-    // for(auto i:v){
+    swap(arr[low], arr[j]);
+    return j;
+}
+
+void qs(vector<int> &arr, int low, int high) {
+    if (low < high) {
+        int pIndex = partition(arr, low, high);
+        qs(arr, low, pIndex-1);
+        qs(arr, pIndex + 1, high);
+    }
+}
+
+
+int main(){
+    // int arr[]={12,4,8,6,1};
+    // int n=sizeof(arr)/sizeof(arr[0]);
+    // r_bubble(arr,n);
+    // r_insertion(arr,n,0);
+    // for(int i: arr){
     //     cout<<i<<" ";
     // }
 
-    return 0;
+    //merge and quick sort
+    vector<int> v={13,8,8,6,1};
+    qs(v,0,v.size()-1);
+    for(auto i:v){
+        cout<<i<<" ";
+    }
 
+    return 0;
 }
